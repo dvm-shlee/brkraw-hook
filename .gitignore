@@ -27,3 +27,7 @@ htmlcov/
 *.swp
 
 # Note: keep .vscode tracked for release tasks
+
+# Local AI agent guidance (not version controlled)
+AGENTS.md
+CLAUDE.md
