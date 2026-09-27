@@ -12,11 +12,30 @@ rules:
   - rules/template_rule.yaml
 transforms:
   - transforms/template.py
+# brkraw 0.6.0+: shared context maps (bases that a dataset's context map
+# includes by `__meta__.name`); each file needs `__meta__.category:
+# context_map`, `name` and `version`
+# context_maps:
+#   - context_maps/template_base.yaml
 ```
 
 When the hook is installed via `brkraw hook install template`, the CLI loads
 those files, evaluates the rules to pick specs/transforms, and finally calls
-`brkraw_hook_template.hook:HOOK` to convert any supported scan.
+`brkraw_hook_template.hook:HOOK` to convert any supported scan. Installed
+files go under a folder named after the package (`brkraw-hook-template`) in
+the brkraw config folder, and `brkraw hook uninstall` removes them.
+
+## brkraw 0.6.0 notes
+
+- `get_dataobj` also receives the frame selection of `brkraw convert
+  --axis/--frames` (`axis`, `frames`) through `**kwargs`; forward `**kwargs`
+  to `helper.get_dataobj` as the template does.
+- When `HOOK` has `convert`, brkraw passes the data as read, without its own
+  per-frame slope/offset scaling (the same as 0.5.x). Scale in the hook if the
+  output needs it. Without `convert`, brkraw 0.6.0 applies per-frame scaling
+  itself.
+- Context maps (0.6.0) name the output files; the hook still returns the
+  image(s).
 
 ## Hook usage example
 
