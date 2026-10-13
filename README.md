@@ -4,6 +4,7 @@ This repository is a template for implementing a BrkRaw dataset hook (rules/spec
 
 ## Maintainer workflow (developers)
 - Copy this template into a new repository, then update `pyproject.toml` metadata (name, entry point, dependencies) before publishing to PyPI.
+- This template depends on `brkraw>=0.6.1rc2,<0.7` (see `pyproject.toml`); keep that range when you copy it, and raise the lower bound when your hook needs a newer brkraw.
 - Implement the dataset-specific hook in `src/brkraw_hook_template/hook.py`. BrkRaw expects a `HOOK` dict that exposes `get_dataobj` and `get_affine` (and optionally `convert` for a richer workflow).
 - Declare hook assets in `src/brkraw_hook_template/brkraw_hook.yaml`, which references package-local directories like `src/brkraw_hook_template/docs/`, `src/brkraw_hook_template/rules/`, `src/brkraw_hook_template/specs/`, and `src/brkraw_hook_template/transforms/`. With brkraw 0.6.0 or later the manifest can also list shared context maps (`context_maps:`); see `docs/hook.md`.
 - Install in two steps: `pip install` the package, then `brkraw hook install <name>` registers its files with brkraw (`brkraw hook uninstall <name>` removes them).
